@@ -1,0 +1,17 @@
+# Keep the public GitHub Pages repository limited to the client-ready site.
+/*
+!/.gitignore
+!/README.md
+!/index.html
+!/.nojekyll
+!/assets/
+/assets/*
+!/assets/field-snake.jpg
+!/assets/lvrz-illustrated-mark.png
+!/assets/joe-headshot.jpg
+!/assets/vikki-headshot-web.jpg
+!/assets/dennis-headshot.jpeg
+!/assets/angela-headshot.jpg
+!/assets/patricia-headshot.jpg
+!/assets/sheila-ledesma-headshot.jpeg
+!/assets/linda-pelaez-headshot.jpeg

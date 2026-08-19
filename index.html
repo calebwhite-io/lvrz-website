@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A Night Bloom fundraising prototype for Las Vegas Reptile Zoo, a 501(c)(3) nonprofit building toward a future opening.">
+  <title>Las Vegas Reptile Zoo — Building Toward a Future Opening</title>
+  <style>
+    :root {
+      --night: #101815;
+      --night-raised: #17231e;
+      --night-soft: #213128;
+      --paper: #f4edde;
+      --paper-deep: #e5dac5;
+      --paper-dark: #cfc3ab;
+      --ink: #101815;
+      --gold: #e8d26d;
+      --gold-bright: #f7cc35;
+      --leaf: #244635;
+      --moss: #687b5f;
+      --mist: #d1d6c1;
+      --clay: #a64832;
+      --line-light: rgba(244, 237, 222, .22);
+      --line-dark: rgba(16, 24, 21, .18);
+      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --sans: Aptos, "Segoe UI", Arial, sans-serif;
+      --mono: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .26);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { min-width: 320px; margin: 0; color: var(--ink); background: var(--paper); font-family: var(--sans); }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 3px solid var(--gold-bright); outline-offset: 3px; }
+    .skip { position: fixed; z-index: 100; top: 9px; left: 9px; padding: 10px 14px; transform: translateY(-180%); border-radius: 5px; color: var(--night); background: var(--gold-bright); font-weight: 800; text-decoration: none; transition: transform .16s ease; }
+    .skip:focus { transform: translateY(0); }
+    .eyebrow { margin: 0; font: 700 .68rem/1.25 var(--mono); letter-spacing: .11em; text-transform: uppercase; }
+    .eyebrow--gold { color: var(--gold); }
+    .eyebrow--moss { color: #607152; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 21px; border: 0; border-radius: 999px; font-weight: 800; font-size: .84rem; text-align: center; text-decoration: none; transition: transform .16s ease, background .16s ease, box-shadow .16s ease; }
+    .button:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.18); }
+    .button--gold { color: var(--night); background: var(--gold); }
+    .button--gold:hover { background: var(--gold-bright); }
+    .button--line { border: 1px solid rgba(244,237,222,.66); color: var(--paper); background: transparent; }
+    .button--line:hover { background: rgba(244,237,222,.1); }
+    .button--dark { color: var(--paper); background: var(--leaf); }
+    .button--dark:hover { background: #193727; }
+    .button--text { min-height: auto; padding: 0; border: 0; border-bottom: 1px solid currentColor; border-radius: 0; color: inherit; background: none; font-size: .84rem; font-weight: 800; line-height: 1.3; text-underline-offset: 5px; }
+    .button--text:hover { transform: none; box-shadow: none; opacity: .72; }
+    .site-header { position: absolute; z-index: 5; top: 0; right: 0; left: 0; color: var(--paper); background: linear-gradient(rgba(16,24,21,.74) 0%, rgba(16,24,21,.42) 58%, rgba(16,24,21,0) 100%); }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; width: min(1280px, calc(100% - 44px)); min-height: 110px; margin: auto; }
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--gold); font: 700 .68rem/1.2 var(--mono); letter-spacing: .1em; text-decoration: none; text-transform: uppercase; }
+    .brand img { width: 148px; height: 148px; object-fit: contain; filter: brightness(1.1) saturate(.77); }
+    .nav-links { display: flex; align-items: center; gap: clamp(15px, 2.8vw, 32px); }
+    .nav-links > a { color: #faf5e8; font-size: .86rem; font-weight: 600; text-decoration: none; text-shadow: 0 1px 3px rgba(16,24,21,.75); }
+    .nav-links > a:hover { color: var(--gold); text-decoration: underline; text-underline-offset: 5px; }
+    .nav-action { min-height: 37px; padding: 0 14px; font-size: .72rem; }
+    .hero { position: relative; display: grid; min-height: min(880px, 100svh); overflow: hidden; color: var(--paper); isolation: isolate; }
+    .hero::before { position: absolute; z-index: -3; inset: 0; content: ""; background: linear-gradient(90deg, rgba(7, 14, 12, .98) 0%, rgba(7, 14, 12, .89) 42%, rgba(7, 14, 12, .18) 100%), url('assets/field-snake.jpg') 67% 55% / cover; }
+    .hero::after { position: absolute; z-index: -2; top: -440px; left: 45%; width: 760px; height: 980px; border: 1px solid rgba(232, 210, 109, .39); border-radius: 50%; content: ""; box-shadow: 0 0 0 85px rgba(232,210,109,.035), 0 0 0 172px rgba(232,210,109,.025), 0 0 160px rgba(232,210,109,.13); transform: rotate(25deg); pointer-events: none; }
+    .hero-inner { display: grid; align-content: center; width: min(1280px, calc(100% - 44px)); padding: 158px 0 84px; margin: auto; }
+    .hero-copy { max-width: 705px; }
+    .hero h1 { max-width: 9ch; margin: 18px 0 0; font: 400 clamp(3.75rem, 8.4vw, 8.7rem)/.79 var(--serif); letter-spacing: -.08em; text-wrap: balance; }
+    .hero-summary { max-width: 49ch; margin: 28px 0 0; color: var(--mist); font-size: clamp(1rem, 1.5vw, 1.15rem); line-height: 1.65; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 32px; }
+    .hero-facts { display: flex; flex-wrap: wrap; gap: 18px 38px; margin-top: 58px; }
+    .hero-fact { padding-left: 14px; border-left: 1px solid rgba(232,210,109,.65); }
+    .hero-fact span { display: block; color: var(--gold); font: 700 .64rem/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+    .hero-fact strong { display: block; max-width: 20ch; margin-top: 5px; font: 400 .98rem/1.35 var(--serif); }
+    .hero-scroll { position: absolute; right: max(22px, calc((100% - 1280px) / 2)); bottom: 31px; color: var(--mist); font: 700 .61rem/1.2 var(--mono); letter-spacing: .1em; text-decoration: none; text-transform: uppercase; writing-mode: vertical-rl; }
+    .hero-scroll::after { display: block; width: 1px; height: 48px; margin: 9px auto 0; content: ""; background: var(--gold); }
+    .intro { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(290px, .95fr); gap: clamp(35px, 8vw, 150px); width: min(1150px, calc(100% - 44px)); padding: clamp(68px, 11vw, 150px) 0; margin: auto; }
+    .intro h2, .section-heading h2, .contact-intro h2 { max-width: 11ch; margin: 16px 0 0; font: 400 clamp(2.6rem, 5vw, 5.8rem)/.87 var(--serif); letter-spacing: -.07em; text-wrap: balance; }
+    .intro-copy { align-self: end; max-width: 450px; }
+    .intro-copy p { margin: 0; color: #465043; font-size: 1.02rem; line-height: 1.68; }
+    .intro-copy p + p { margin-top: 18px; }
+    .nonprofit-badge { display: flex; align-items: center; gap: 15px; padding: 21px; margin-top: 27px; border: 1px solid var(--line-dark); background: #eee6d5; }
+    .nonprofit-badge svg { flex: 0 0 auto; width: 29px; height: 29px; color: var(--leaf); }
+    .nonprofit-badge strong { display: block; font-size: .85rem; }
+    .nonprofit-badge small { display: block; margin-top: 3px; color: #5e655a; font-size: .73rem; line-height: 1.4; }
+    .commitment { color: var(--paper); background: var(--night); }
+    .commitment-inner { display: grid; grid-template-columns: .78fr 1.22fr; width: min(1280px, 100%); margin: auto; }
+    .commitment-image { min-height: 590px; overflow: hidden; }
+    .commitment-image img { width: 100%; height: 100%; object-fit: cover; object-position: 53% center; filter: saturate(.62) contrast(1.05); }
+    .commitment-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(47px, 7vw, 110px); }
+    .commitment-copy h2 { max-width: 10ch; margin: 17px 0 0; font: 400 clamp(2.7rem, 5vw, 5.5rem)/.87 var(--serif); letter-spacing: -.07em; text-wrap: balance; }
+    .commitment-copy > p { max-width: 46ch; margin: 25px 0 0; color: var(--mist); line-height: 1.65; }
+    .commitments { display: grid; gap: 1px; margin-top: 35px; border-top: 1px solid var(--line-light); border-bottom: 1px solid var(--line-light); }
+    .commitment-item { display: grid; grid-template-columns: 75px 1fr; gap: 17px; padding: 17px 0; }
+    .commitment-item span { color: var(--gold); font: 700 .64rem/1.3 var(--mono); letter-spacing: .1em; }
+    .commitment-item p { margin: 0; color: #f0ebdc; font: 400 1.02rem/1.3 var(--serif); }
+    .board { padding: clamp(72px, 10vw, 140px) 0; background: #e5dac5; }
+    .board-inner, .sponsors-inner { width: min(1280px, calc(100% - 44px)); margin: auto; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 22px; }
+    .section-heading h2 { max-width: 11ch; }
+    .section-heading p { max-width: 39ch; margin: 0 0 5px; color: #4b5548; line-height: 1.6; }
+    .board-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin-top: 51px; background: rgba(16,24,21,.2); }
+    .board-member { position: relative; display: grid; grid-template-rows: 340px minmax(190px, 1fr); min-height: 530px; overflow: hidden; background: var(--paper); }
+    .board-member img { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; background: #d7cbb5; filter: saturate(.72); transition: filter .5s ease; }
+    .board-member:hover img { filter: saturate(.94); }
+    .board-member--text { display: flex; flex-direction: column; justify-content: end; min-height: 530px; padding: clamp(28px, 4vw, 42px); color: var(--paper); background: var(--leaf); }
+    .board-member--text::before { width: 82px; height: 82px; margin-bottom: auto; border: 1px solid rgba(232,210,109,.52); border-radius: 50%; content: ""; box-shadow: 0 0 0 16px rgba(232,210,109,.045); }
+    .board-copy { padding: 21px 22px 24px; border-top: 1px solid rgba(16,24,21,.15); }
+    .board-copy h3 { margin: 0; font: 400 1.5rem/1.04 var(--serif); letter-spacing: -.035em; }
+    .board-copy .role { display: block; margin-top: 7px; color: #657253; font: 700 .61rem/1.3 var(--mono); letter-spacing: .09em; text-transform: uppercase; }
+    .board-copy p { margin: 12px 0 0; color: #4f584c; font-size: .82rem; line-height: 1.52; }
+    .board-member--text h3 { margin: 16px 0 0; color: var(--paper); font: 400 clamp(2rem, 3.2vw, 3.2rem)/.88 var(--serif); letter-spacing: -.06em; }
+    .board-member--text .role { display: block; margin-top: 9px; color: var(--gold); font: 700 .61rem var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+    .board-member--text p { max-width: 30ch; margin: 14px 0 0; color: #d9ddca; line-height: 1.55; }
+    .sponsors { padding: clamp(72px, 9vw, 126px) 0; color: var(--paper); background: var(--night); }
+    .sponsors .section-heading p { color: var(--mist); }
+    .sponsor-tier { display: inline-flex; align-items: center; gap: 8px; margin: 28px 0 0; color: var(--gold); font: 700 .68rem var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+    .sponsor-tier::before { width: 8px; height: 8px; border-radius: 50%; content: ""; background: var(--gold); box-shadow: 0 0 0 4px rgba(232,210,109,.12); }
+    .sponsor-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin-top: 27px; background: var(--line-light); }
+    .sponsor-card { min-height: 300px; padding: 18px; background: #142019; }
+    .sponsor-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: center top; filter: saturate(.7); }
+    .sponsor-card h3 { margin: 15px 0 0; font: 400 1.25rem/1.05 var(--serif); letter-spacing: -.025em; }
+    .sponsor-card p { margin: 7px 0 0; color: var(--gold); font: 700 .6rem var(--mono); letter-spacing: .09em; text-transform: uppercase; }
+    .contact { color: var(--paper); background: var(--night-raised); }
+    .contact-inner { display: grid; grid-template-columns: minmax(0, .85fr) minmax(400px, 1.15fr); gap: clamp(36px, 8vw, 130px); width: min(1150px, calc(100% - 44px)); padding: clamp(74px, 10vw, 140px) 0; margin: auto; }
+    .contact-intro { align-self: start; }
+    .contact-intro h2 { color: var(--paper); }
+    .contact-intro p { max-width: 37ch; margin: 25px 0 0; color: var(--mist); line-height: 1.65; }
+    .contact-points { display: grid; gap: 16px; margin-top: 35px; }
+    .contact-point { padding-top: 15px; border-top: 1px solid var(--line-light); }
+    .contact-point span { display: block; color: var(--gold); font: 700 .63rem var(--mono); letter-spacing: .09em; text-transform: uppercase; }
+    .contact-point strong, .contact-point a { display: block; margin-top: 6px; color: var(--paper); font: 400 1.04rem/1.3 var(--serif); }
+    .contact-point a { text-decoration-color: var(--gold); text-underline-offset: 5px; }
+    .form-panel { padding: clamp(24px, 4vw, 45px); background: #f0e9d9; color: var(--ink); box-shadow: var(--shadow); }
+    .form-panel h3 { margin: 0; font: 400 clamp(1.8rem, 3vw, 2.8rem)/.93 var(--serif); letter-spacing: -.045em; }
+    .form-panel > p { max-width: 45ch; margin: 13px 0 25px; color: #566052; font-size: .88rem; line-height: 1.55; }
+    form { display: grid; gap: 17px; }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .field { display: grid; gap: 7px; }
+    label { color: #364136; font: 700 .68rem var(--mono); letter-spacing: .075em; text-transform: uppercase; }
+    input, select, textarea { width: 100%; min-height: 45px; padding: 10px 12px; border: 1px solid #a9ad99; border-radius: 4px; color: var(--ink); background: #fcfaf4; font-size: .91rem; }
+    textarea { min-height: 117px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { border-color: var(--leaf); outline: 3px solid rgba(247,204,53,.65); outline-offset: 1px; }
+    .form-foot { display: flex; align-items: start; justify-content: space-between; gap: 15px; margin-top: 4px; }
+    .form-disclosure { max-width: 25ch; margin: 0; color: #5c6558; font-size: .72rem; line-height: 1.45; }
+    .form-status { min-height: 20px; margin: 0; color: var(--leaf); font-size: .78rem; font-weight: 700; line-height: 1.4; }
+    .footer { color: var(--mist); background: #0a100e; }
+    .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; width: min(1280px, calc(100% - 44px)); padding: 33px 0; margin: auto; }
+    .footer-brand { color: var(--gold); font: 700 .64rem var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+    .footer small { font-size: .72rem; line-height: 1.45; }
+    @media (max-width: 820px) {
+      .nav { width: min(100% - 28px, 1280px); min-height: 88px; }
+      .brand img { width: 100px; height: 100px; }
+      .nav-links > a { display: none; }
+      .nav-links > a.nav-kept { display: block; }
+      .hero { min-height: 770px; }
+      .hero::before { background: linear-gradient(180deg, rgba(7, 14, 12, .94) 0%, rgba(7, 14, 12, .8) 54%, rgba(7, 14, 12, .57) 100%), url('assets/field-snake.jpg') 65% 50% / cover; }
+      .hero::after { top: -510px; left: 28%; }
+      .hero-inner { width: min(100% - 28px, 1280px); padding-top: 135px; }
+      .hero-scroll { display: none; }
+      .intro, .contact-inner { grid-template-columns: 1fr; width: min(100% - 28px, 1150px); }
+      .commitment-inner { grid-template-columns: 1fr; }
+      .commitment-image { min-height: 350px; max-height: 440px; }
+      .board-inner, .sponsors-inner { width: min(100% - 28px, 1280px); }
+      .section-heading { display: grid; align-items: start; }
+      .section-heading p { margin: 0; }
+      .board-grid { grid-template-columns: 1fr 1fr; }
+      .sponsor-grid { grid-template-columns: 1fr 1fr; }
+      .contact-inner { gap: 42px; }
+    }
+    @media (max-width: 540px) {
+      .hero h1 { font-size: clamp(3.5rem, 18vw, 5.3rem); }
+      .hero-facts { gap: 14px; margin-top: 38px; }
+      .hero-fact { flex: 1 1 45%; }
+      .button { width: 100%; }
+      .nav-action { width: auto; }
+      .field-grid, .board-grid, .sponsor-grid { grid-template-columns: 1fr; }
+      .board-member { grid-template-rows: 380px auto; min-height: 0; }
+      .board-member--text { min-height: 380px; }
+      .form-foot { display: grid; }
+      .footer-inner { width: min(100% - 28px, 1280px); }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Las Vegas Reptile Zoo home"><img src="assets/lvrz-illustrated-mark.png" alt="">Las Vegas<br>Reptile Zoo</a>
+      <div class="nav-links"><a href="#why">Why it matters</a><a href="#board">Board</a><a class="nav-kept" href="#sponsors">Sponsors</a><a class="button button--gold nav-action" href="https://gofundme.com/f/hbp344-help-build-the-first-reptile-zoo-in-las-vegas" target="_blank" rel="noopener noreferrer">Give today</a></div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow eyebrow--gold">Las Vegas Reptile Zoo / Building toward a future opening</p>
+          <h1 id="hero-title">A place worth looking closer at.</h1>
+          <p class="hero-summary">Las Vegas Reptile Zoo is a 501(c)(3) nonprofit raising support toward a future place for education, care, and meaningful connection with reptiles.</p>
+          <div class="hero-actions"><a class="button button--gold" href="https://gofundme.com/f/hbp344-help-build-the-first-reptile-zoo-in-las-vegas" target="_blank" rel="noopener noreferrer">Give through GoFundMe</a><a class="button button--line" href="#sponsor">Explore sponsorship</a></div>
+        </div>
+        <div class="hero-facts" aria-label="Campaign information"><div class="hero-fact"><span>Now raising</span><strong>Support toward a future opening</strong></div><div class="hero-fact"><span>How to help</span><strong>Give, sponsor, or begin a conversation</strong></div><div class="hero-fact"><span>Built for</span><strong>Education, care, and connection</strong></div></div>
+      </div>
+      <a class="hero-scroll" href="#why">Look closer</a>
+    </section>
+
+    <section class="intro" id="why" aria-labelledby="why-title">
+      <div><p class="eyebrow eyebrow--moss">The future we are funding</p><h2 id="why-title">The best way to care is to understand.</h2></div>
+      <div class="intro-copy"><p>Las Vegas Reptile Zoo is being built around a simple belief: when people meet an animal with context, respect, and curiosity, they see the natural world differently.</p><p>Early support helps turn that belief into a future home for learning and connection. This campaign is an invitation to help move that work from vision toward opening.</p><div class="nonprofit-badge"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s8-4.35 8-11V5l-8-3-8 3v5c0 6.65 8 11 8 11Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg><div><strong>Approved 501(c)(3) nonprofit</strong><small>Support is directed toward the organization’s work toward a future opening.</small></div></div></div>
+    </section>
+
+    <section class="commitment" aria-labelledby="commitment-title">
+      <div class="commitment-inner"><div class="commitment-image"><img src="assets/field-snake.jpg" alt="Close photograph of a coiled scaled reptile on wood chips"></div><div class="commitment-copy"><p class="eyebrow eyebrow--gold">A campaign with a clear point of view</p><h2 id="commitment-title">Not just a building. A different kind of encounter.</h2><p>The goal is to create an institution that helps people look beyond fear or assumption and toward care, knowledge, and respect for reptiles.</p><div class="commitments"><div class="commitment-item"><span>01</span><p>Make education and curiosity the starting point.</p></div><div class="commitment-item"><span>02</span><p>Build with real people and responsible animal care at the center.</p></div><div class="commitment-item"><span>03</span><p>Invite donors and partners into the work before opening day.</p></div></div></div></div>
+    </section>
+
+    <section class="board" id="board" aria-labelledby="board-title">
+      <div class="board-inner">
+        <div class="section-heading"><div><p class="eyebrow eyebrow--moss">Board of directors</p><h2 id="board-title">The people carrying the future forward.</h2></div></div>
+        <div class="board-grid">
+          <article class="board-member"><img src="assets/joe-headshot.jpg" alt="Portrait of Joe, supplied by Las Vegas Reptile Zoo"><div class="board-copy"><h3>Joe</h3><span class="role">Founder &amp; CEO</span><p>His lifelong interest in reptiles, wildlife, and conservation led to the vision for Las Vegas Reptile Zoo.</p></div></article>
+          <article class="board-member"><img src="assets/vikki-headshot-web.jpg" alt="Portrait of Vikki Hill-Gonzalez, supplied by Las Vegas Reptile Zoo"><div class="board-copy"><h3>Vikki Hill-Gonzalez</h3><span class="role">President</span><p>A community leader and advocate for animal education, conservation, and meaningful public connection.</p></div></article>
+          <article class="board-member"><img src="assets/dennis-headshot.jpeg" alt="Portrait of Dennis J. Golden, supplied by Las Vegas Reptile Zoo"><div class="board-copy"><h3>Dennis J. Golden</h3><span class="role">Vice President &amp; Reptile Specialist</span><p>Brings decades of hands-on reptile experience and a commitment to responsible animal care and public education.</p></div></article>
+          <article class="board-member"><img src="assets/angela-headshot.jpg" alt="Portrait of Angela Bolanos, supplied by Las Vegas Reptile Zoo"><div class="board-copy"><h3>Angela Bolanos</h3><span class="role">Treasurer</span><p>Brings creative design, marketing, print-production, and community-building experience to LVRZ.</p></div></article>
+          <article class="board-member board-member--text"><p class="eyebrow eyebrow--gold">Board member</p><h3>Justin W. Hollins</h3><span class="role">Animal care, infrastructure &amp; operations</span><p>His experience spans reptile care, enclosure and infrastructure work, and supply chain, logistics, and operations.</p></article>
+          <article class="board-member"><img src="assets/patricia-headshot.jpg" alt="Portrait of Patricia, supplied by Las Vegas Reptile Zoo"><div class="board-copy"><h3>Patricia</h3><span class="role">Board Member</span><p>Brings commercial real-estate, strategic site-selection, investment-analysis, and development-project experience.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sponsors" id="sponsors" aria-labelledby="sponsors-title">
+      <div class="sponsors-inner">
+        <div class="section-heading"><div><p class="eyebrow eyebrow--gold">Early supporters</p><h2 id="sponsors-title">The first names in the field guide.</h2></div></div>
+        <p class="sponsor-tier">Tree Frog Sponsors</p>
+        <div class="sponsor-grid">
+          <article class="sponsor-card"><img src="assets/sheila-ledesma-headshot.jpeg" alt="Portrait of Sheila Ledesma, supplied by Las Vegas Reptile Zoo"><h3>Sheila Ledesma</h3><p>Tree Frog Sponsor</p></article>
+          <article class="sponsor-card"><img src="assets/linda-pelaez-headshot.jpeg" alt="Portrait of Linda Pelaez, supplied by Las Vegas Reptile Zoo"><h3>Linda Pelaez</h3><p>Tree Frog Sponsor</p></article>
+          <article class="sponsor-card"><img src="assets/dennis-headshot.jpeg" alt="Portrait of Dennis Golden, supplied by Las Vegas Reptile Zoo"><h3>Dennis Golden</h3><p>Tree Frog Sponsor</p></article>
+          <article class="sponsor-card"><img src="assets/vikki-headshot-web.jpg" alt="Portrait of Vikki Hill-Gonzalez, supplied by Las Vegas Reptile Zoo"><h3>Vikki Hill-Gonzalez</h3><p>Tree Frog Sponsor</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="sponsor" aria-labelledby="sponsor-title">
+      <div class="contact-inner"><div class="contact-intro"><p class="eyebrow eyebrow--gold">Sponsor / partner inquiry</p><h2 id="sponsor-title">Start with a simple conversation.</h2><p>Whether you are considering organizational support, a partnership, or another way to contribute, send the basics and tell us what you have in mind.</p><div class="contact-points"><div class="contact-point"><span>Campaign giving</span><a href="https://gofundme.com/f/hbp344-help-build-the-first-reptile-zoo-in-las-vegas" target="_blank" rel="noopener noreferrer">Support the GoFundMe campaign ↗</a></div><div class="contact-point"><span>Sponsorship contact</span><a href="mailto:vikkig@lvreptilezoo.org">vikkig@lvreptilezoo.org</a></div></div></div>
+        <div class="form-panel"><h3>Tell us how you would like to help.</h3><p>This prototype intentionally uses a direct email handoff rather than pretending that it stores a submission. A live site should replace this with an approved, secured form-delivery service.</p><form id="sponsor-form" novalidate><div class="field-grid"><div class="field"><label for="name">Name <span aria-hidden="true">*</span></label><input id="name" name="name" type="text" autocomplete="name" required></div><div class="field"><label for="email">Email <span aria-hidden="true">*</span></label><input id="email" name="email" type="email" autocomplete="email" required></div></div><div class="field-grid"><div class="field"><label for="organization">Organization</label><input id="organization" name="organization" type="text" autocomplete="organization"></div><div class="field"><label for="interest">I’m interested in <span aria-hidden="true">*</span></label><select id="interest" name="interest" required><option value="" selected disabled>Select one</option><option>Corporate sponsorship</option><option>Community partnership</option><option>Individual major giving</option><option>Volunteer or in-kind support</option><option>Other</option></select></div></div><div class="field"><label for="message">What would you like to discuss?</label><textarea id="message" name="message" placeholder="A short note is enough to begin."></textarea></div><div class="form-foot"><button class="button button--dark" type="submit">Prepare email to Vikki</button><p class="form-disclosure">Submitting opens your default email app with your details addressed to Vikki. It does not silently send or store your information.</p></div><p class="form-status" id="form-status" aria-live="polite"></p></form></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="footer-inner"><div class="footer-brand">Las Vegas Reptile Zoo</div></div></footer>
+  <script>
+    const form = document.getElementById('sponsor-form');
+    const status = document.getElementById('form-status');
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      const value = field => document.getElementById(field).value.trim() || 'Not provided';
+      const subject = `LVRZ sponsor / partner inquiry — ${value('interest')}`;
+      const body = [
+        'Las Vegas Reptile Zoo sponsor / partner inquiry',
+        '',
+        `Name: ${value('name')}`,
+        `Email: ${value('email')}`,
+        `Organization: ${value('organization')}`,
+        `Interest: ${value('interest')}`,
+        '',
+        'Message:',
+        value('message')
+      ].join('\n');
+      status.textContent = 'Opening your email application with this inquiry addressed to Vikki…';
+      window.location.href = `mailto:vikkig@lvreptilezoo.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
+</body>
+</html>

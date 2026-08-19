@@ -59,7 +59,7 @@
     .nav-links > a:hover { color: var(--gold); text-decoration: underline; text-underline-offset: 5px; }
     .nav-action { min-height: 37px; padding: 0 14px; font-size: .72rem; }
     .hero { position: relative; display: grid; min-height: min(880px, 100svh); overflow: hidden; color: var(--paper); isolation: isolate; }
-    .hero::before { position: absolute; z-index: -3; inset: 0; content: ""; background: linear-gradient(90deg, rgba(7, 14, 12, .98) 0%, rgba(7, 14, 12, .89) 42%, rgba(7, 14, 12, .18) 100%), url('assets/field-snake.jpg') 67% 55% / cover; }
+    .hero::before { position: absolute; z-index: -3; inset: 0; content: ""; background: linear-gradient(90deg, rgba(7, 14, 12, .98) 0%, rgba(7, 14, 12, .89) 42%, rgba(7, 14, 12, .18) 100%), url('assets/alazar-kassahun-crocodiles.jpg') 50% 58% / cover; }
     .hero::after { position: absolute; z-index: -2; top: -440px; left: 45%; width: 760px; height: 980px; border: 1px solid rgba(232, 210, 109, .39); border-radius: 50%; content: ""; box-shadow: 0 0 0 85px rgba(232,210,109,.035), 0 0 0 172px rgba(232,210,109,.025), 0 0 160px rgba(232,210,109,.13); transform: rotate(25deg); pointer-events: none; }
     .hero-inner { display: grid; align-content: center; width: min(1280px, calc(100% - 44px)); padding: 158px 0 84px; margin: auto; }
     .hero-copy { max-width: 705px; }
@@ -72,6 +72,8 @@
     .hero-fact strong { display: block; max-width: 20ch; margin-top: 5px; font: 400 .98rem/1.35 var(--serif); }
     .hero-scroll { position: absolute; right: max(22px, calc((100% - 1280px) / 2)); bottom: 31px; color: var(--mist); font: 700 .61rem/1.2 var(--mono); letter-spacing: .1em; text-decoration: none; text-transform: uppercase; writing-mode: vertical-rl; }
     .hero-scroll::after { display: block; width: 1px; height: 48px; margin: 9px auto 0; content: ""; background: var(--gold); }
+    .photo-credit { position: absolute; z-index: 2; bottom: 25px; left: max(22px, calc((100% - 1280px) / 2)); max-width: min(390px, calc(100% - 44px)); padding: 8px 10px; border: 1px solid rgba(244,237,222,.32); border-radius: 999px; color: var(--mist); background: rgba(7,14,12,.5); font: 600 .59rem/1.2 var(--mono); letter-spacing: .04em; text-decoration: none; }
+    .photo-credit:hover { border-color: rgba(232,210,109,.7); color: var(--gold); }
     .intro { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(290px, .95fr); gap: clamp(35px, 8vw, 150px); width: min(1150px, calc(100% - 44px)); padding: clamp(68px, 11vw, 150px) 0; margin: auto; }
     .intro h2, .section-heading h2, .contact-intro h2 { max-width: 11ch; margin: 16px 0 0; font: 400 clamp(2.6rem, 5vw, 5.8rem)/.87 var(--serif); letter-spacing: -.07em; text-wrap: balance; }
     .intro-copy { align-self: end; max-width: 450px; }
@@ -152,10 +154,11 @@
       .nav-links > a { display: none; }
       .nav-links > a.nav-kept { display: block; }
       .hero { min-height: 770px; }
-      .hero::before { background: linear-gradient(180deg, rgba(7, 14, 12, .94) 0%, rgba(7, 14, 12, .8) 54%, rgba(7, 14, 12, .57) 100%), url('assets/field-snake.jpg') 65% 50% / cover; }
+      .hero::before { background: linear-gradient(180deg, rgba(7, 14, 12, .94) 0%, rgba(7, 14, 12, .8) 54%, rgba(7, 14, 12, .57) 100%), url('assets/alazar-kassahun-crocodiles.jpg') 50% 55% / cover; }
       .hero::after { top: -510px; left: 28%; }
-      .hero-inner { width: min(100% - 28px, 1280px); padding-top: 135px; }
+      .hero-inner { width: min(100% - 28px, 1280px); padding: 135px 0 132px; }
       .hero-scroll { display: none; }
+      .photo-credit { bottom: 21px; left: 14px; max-width: calc(100% - 28px); }
       .intro, .contact-inner { grid-template-columns: 1fr; width: min(100% - 28px, 1150px); }
       .commitment-inner { grid-template-columns: 1fr; }
       .commitment-image { min-height: 350px; max-height: 440px; }
@@ -201,6 +204,7 @@
         </div>
         <div class="hero-facts" aria-label="Campaign information"><div class="hero-fact"><span>Now raising</span><strong>Support toward a future opening</strong></div><div class="hero-fact"><span>How to help</span><strong>Give, sponsor, or begin a conversation</strong></div><div class="hero-fact"><span>Built for</span><strong>Education, care, and connection</strong></div></div>
       </div>
+      <a class="photo-credit" href="https://unsplash.com/photos/brown-and-black-crocodile-in-close-up-photography-7LZBla-UWEw" target="_blank" rel="noopener noreferrer" aria-label="View the hero photo by Alazar Kassahun on Unsplash">Hero photo by Alazar Kassahun on Unsplash ↗</a>
       <a class="hero-scroll" href="#why">Look closer</a>
     </section>
 
